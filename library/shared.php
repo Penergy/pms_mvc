@@ -1,4 +1,5 @@
 <?php
+require_once(ROOT.DS.'library'.DS.'Routing/Dispatcher.php');
 
 /* 检查是否为开发环境并设置是否记录错误日志 */
 function setReporting(){
@@ -51,28 +52,9 @@ function unregisterGlobals(){
 /* 主请求方法，主要目的拆分URL请求 */
 function callHook() {
     global $url;
-    $urlArray = array();
-    if($url ==''){ //如果是域名首地址 www.example.com or www.example.com/example
-        $template = new Template('','');
-        $template->autoRender();
-        return;
-    }
-    $urlArray = explode("/",$url);
-    $controller = $urlArray[0];
-    array_shift($urlArray);
-    $action = $urlArray[0];
-    array_shift($urlArray);
-    $queryString = $urlArray;
-    $controllerName = $controller;
-    $controller = ucwords($controller);
-    $model = rtrim($controller, 's');
-    $controller .= 'Controller';
-    $dispatch = new $controller($model,$controllerName,$action);
-    if ((int)method_exists($controller, $action)) {
-        call_user_func_array(array($dispatch,$action),$queryString);
-    } else {
-        /* 生成错误代码 */
-    }
+    // fb('test');
+    $patcher = new Dispatcher();
+    $parser_content = $patcher->_URL_parser($url); 
 }
  
 /* 自动加载控制器和模型 */

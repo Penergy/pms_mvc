@@ -30,6 +30,7 @@ class Template {
 		 	include (ROOT.DS. 'application' .DS. 'views' .DS. 'footer.php');
 		 }
 	}
+	
 	/* 显示默认模版 */
 	function autoRender($switch=true) {
 		if($switch==null){
